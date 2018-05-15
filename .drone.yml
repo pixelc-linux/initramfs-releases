@@ -13,6 +13,6 @@ pipeline:
   github_release:
     image: plugins/github-release
     secrets: [ github_token ]
-    files: /ramdisk/mkinitramfs/mkinitramfs/*.img
+    files: /ramdisk/mkinitramfs/mkinitramfs/*.lz4
     when:
       event: tag
