@@ -1,0 +1,17 @@
+workspace:
+  base: /ramdisk
+  path: /mkinitramfs
+pipeline:
+  build:
+    image: dvitali/pixelc-build-container:3
+    commands:
+      - git clone --depth 1 https://github.com/pixelc-linux/pixelc-mkinitramfs.sh .
+      - "./mkinitramfs.sh -d mmcblk0p4 -s / -o initramfs_system.cpio"
+      - "./mkinitramfs.sh -d mmcblk0p7 -s / -o initramfs_data.cpio"
+      - "./mkinitramfs.sh -d mmcblk0p7 -s /rootfs -o initramfs_data_distro.cpio"
+  github_release:
+    image: plugins/github-release
+    secrets: [ github_token ]
+    files: /ramdisk/mkinitramfs/*.img
+    when:
+      event: tag
