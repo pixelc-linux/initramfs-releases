@@ -8,9 +8,9 @@ pipeline:
       - git clone --depth 1 https://github.com/pixelc-linux/pixelc-mkinitramfs.sh mkinitramfs
       - cd mkinitramfs
       - wget $(curl https://api.github.com/repos/pixelc-linux/firmware-releases/releases/latest | jq -r '.assets[] | select(.name == "firmware_all.tar.gz") | .browser_download_url') -O firmware_all.tar.gz
-      - "./mkinitramfs.sh -d mmcblk0p4 -s / -o initramfs_system.cpio"
-      - "./mkinitramfs.sh -d mmcblk0p7 -s / -o initramfs_data.cpio"
-      - "./mkinitramfs.sh -d mmcblk0p7 -s /rootfs -o initramfs_data_distro.cpio"
+      - "./mkinitramfs.sh -d mmcblk1p4 -s / -o initramfs_system-mmcblk1p4.cpio"
+      - "./mkinitramfs.sh -d mmcblk1p7 -s / -o initramfs_data-mmcblk1p7.cpio"
+      - "./mkinitramfs.sh -d mmcblk1p7 -s /rootfs -o initramfs_data_distro-mmcblk1p7.cpio"
   github_release:
     image: plugins/github-release
     secrets: [ github_token ]
